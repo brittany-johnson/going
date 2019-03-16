@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 
-class CardNav extends React.Component {
+class PlaceNav extends React.Component {
   render() {
     return (
       <ButtonToolbar>
@@ -13,4 +13,4 @@ class CardNav extends React.Component {
   }
 }
 
-export default CardNav;
+export default PlaceNav;

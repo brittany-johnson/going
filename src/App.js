@@ -1,14 +1,12 @@
 import React from 'react';
-import NavBar from './components/NavBar.js';
-import Selection  from './components/Selection.js';
-import Card from './components/Card.js';
+import NavBar from './components/navBar/NavBar.js';
+import Card from './components/card/Card.js';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
         <NavBar />
-        <Selection />
         <Card />
       </div>
     );

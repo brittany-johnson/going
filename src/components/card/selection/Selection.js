@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CategorySelection from './CategorySelection.js';
+import CategorySelection from './components/CategorySelection.js';
 
 class Selection extends React.Component {
   render() {
