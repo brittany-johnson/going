@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 
-class GoGoNav extends React.Component {
+class CardNav extends React.Component {
   render() {
     return (
       <ButtonToolbar>
@@ -13,4 +13,4 @@ class GoGoNav extends React.Component {
   }
 }
 
-export default GoGoNav;
+export default CardNav;

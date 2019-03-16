@@ -2,8 +2,9 @@ import React from 'react';
 import { Card, ListGroup, ListGroupItem} from 'react-bootstrap';
 
 import placesToken from '../api/keys';
+import Places from '../api/api';
 
-class EstablishmentCard extends React.Component {
+class Place extends React.Component {
 
   constructor(props) {
     super(props);
@@ -14,31 +15,23 @@ class EstablishmentCard extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://maps.googleapis.com/maps/api/js?key={placesKey}=places')
-      .then(res => res.text())
+    fetch(`${Places.urlBody}${Places.query}+${Places.location}&key=${placesToken}`)
+      .then(res => res.json())
       .then(json => {
         this.setState({
-            isLoaded: true,
             name: json,
         })
-      console.log(json);
       });
   }
 
   render() {
-
-    let { isLoaded, name } = this.state;
-
-    if (!isLoaded) {
-      return <div>Loading... </div>
-    } else {
-      return <div>I'm here bitch! </div>
-    }
+    let { name } = this.state;
+    console.log(name);
     return (
       <Card style={{ width: '30rem' }}>
         <Card.Img variant="top" src="" />
         <Card.Body>
-          <Card.Title>Restaurant Name</Card.Title>
+          <Card.Title>{name.name}</Card.Title>
           <Card.Text>
             Quick blub about restaurant.
           </Card.Text>
@@ -48,11 +41,11 @@ class EstablishmentCard extends React.Component {
           <ListGroupItem>9AM-10PM</ListGroupItem>
         </ListGroup>
         <Card.Body>
-          <Card.Link href="#">Let's Go!</Card.Link>
+          <Card.Link href="#">ho</Card.Link>
         </Card.Body>
       </Card>
     );
   }
 }
 
-export default EstablishmentCard;
+export default Place;

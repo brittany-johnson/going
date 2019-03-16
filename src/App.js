@@ -1,17 +1,15 @@
 import React from 'react';
 import NavBar from './components/NavBar.js';
-import CategorySelection  from './components/CategorySelection.js';
-import EstablishmentCard from './components/EstablishmentCard.js';
-import GoGoNav from './components/CardNav.js';
+import Selection  from './components/Selection.js';
+import Card from './components/Card.js';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
         <NavBar />
-        <CategorySelection />
-        <EstablishmentCard />
-        <GoGoNav />
+        <Selection />
+        <Card />
       </div>
     );
   }
