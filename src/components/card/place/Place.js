@@ -12,25 +12,45 @@ class Place extends React.Component {
     super(props);
     this.state = {
       name: [],
-      isLoaded: false,
     }
   }
+  //
+  // fetchGooglePlaces() {
+  //   // fetch(`${Places.urlBody}${this.props.carddata}+${Places.location}&key=${placesToken}`)
+  //   fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.props.testThis}+Houston&key=${placesToken}`)
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       this.setState({
+  //           name: json,
+  //           carddata: '',
+  //       })
+  //     });
+  // }
 
   componentDidMount() {
-    fetch(`${Places.urlBody}${Places.query}+${Places.location}&key=${placesToken}`)
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-            name: json,
-        })
-      });
+    // this.fetchGooglePlaces();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.carddata !== prevProps.carddata) {
+      this.setState({
+          carddata: this.props.carddata,
+      })
+      fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.props.carddata}+Houston&key=${placesToken}`)
+        .then(res => res.json())
+        .then(json => {
+          this.setState({
+              name: json.results,
+              carddata: this.props.carddata,
+          })
+        });
+    }
   }
 
   render() {
     let { name } = this.state;
     console.log(name);
-    return (
-      <>
+    const placeCard = name.map((name) =>
         <Card style={{ width: '30rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body>
@@ -40,14 +60,18 @@ class Place extends React.Component {
             </Card.Text>
           </Card.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem>4/5</ListGroupItem>
+            <ListGroupItem>{name.rating}</ListGroupItem>
             <ListGroupItem>9AM-10PM</ListGroupItem>
           </ListGroup>
           <Card.Body>
             <Card.Link href="#">ho</Card.Link>
           </Card.Body>
         </Card>
-        <PlaceNav />
+    )
+    return (
+      <>
+      {placeCard}
+      <PlaceNav />
       </>
     );
   }

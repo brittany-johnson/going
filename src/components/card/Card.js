@@ -4,17 +4,28 @@ import Place from './place/Place.js';
 import Selection from './selection/Selection.js';
 
 class Card extends React.Component {
-  constructor(props) {
+  constructor(props){
     super(props);
+    this.state = {
+      placeQuery: '',
+    }
+  };
+
+  updateCardData = (selectionChange) => {
+    this.setState({
+        placeQuery: selectionChange,
+    })
+  };
+
+  componentDidMount() {
+    console.log("mount");
   }
-  updateCards() {
-    console.log()
-  }
+
   render() {
     return(
       <>
-        <Selection />
-        <Place />
+        <Selection updateCardData={this.updateCardData}/>
+        <Place carddata={this.state.placeQuery} testThis='pizza'/>
       </>
     );
   }

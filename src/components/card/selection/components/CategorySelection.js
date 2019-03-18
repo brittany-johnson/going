@@ -6,16 +6,17 @@ class CategorySelection extends React.Component {
     super(props);
     this.onSelect = this.onSelect.bind(this);
     this.state = {
-      value: " "
+      value: "Category"
     }
   };
-  onSelect(event){
+  onSelect = (event) => {
     this.setState({value: event});
+    this.props.updateCardData(event);
   }
 
   render() {
     return (
-      <DropdownButton id="dropdown-item-button" title="Category" onSelect={this.onSelect} value={this.state.value}>
+      <DropdownButton id="dropdown-item-button" title={this.state.value} onSelect={this.onSelect} value={this.state.value}>
         <Dropdown.Item as="button" eventKey="breakfast">Breakfast</Dropdown.Item>
         <Dropdown.Item as="button" eventKey="brunch">Brunch</Dropdown.Item>
         <Dropdown.Item as="button" eventKey="lunch">Lunch</Dropdown.Item>
