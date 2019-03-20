@@ -2,10 +2,6 @@ import CategorySelection from '../components/card/selection/components/CategoryS
 
 const Places = {
   urlBody: 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=',
-  query: `${CategorySelection.value}`,
-  location: 'Houston',
 };
 
 export default Places;
-
-// https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=YOUR_API_KEY

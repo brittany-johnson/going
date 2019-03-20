@@ -8,6 +8,7 @@ class Card extends React.Component {
     super(props);
     this.state = {
       placeQuery: '',
+      locationQuery: '',
     }
   };
 
@@ -17,15 +18,21 @@ class Card extends React.Component {
     })
   };
 
-  componentDidMount() {
-    console.log("mount");
-  }
+  updateLocation = (locationChange) => {
+    this.setState({
+      locationQuery: locationChange,
+    })
+  };
 
   render() {
     return(
       <>
-        <Selection updateCardData={this.updateCardData}/>
-        <Place carddata={this.state.placeQuery} testThis='pizza'/>
+        <Selection
+        updateCardData={this.updateCardData} updateLocation={this.updateLocation}
+        />
+        <Place
+        carddata={this.state.placeQuery} locationdata={this.state.locationQuery}
+        />
       </>
     );
   }

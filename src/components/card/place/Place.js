@@ -14,42 +14,41 @@ class Place extends React.Component {
       name: [],
     }
   }
-  //
-  // fetchGooglePlaces() {
-  //   // fetch(`${Places.urlBody}${this.props.carddata}+${Places.location}&key=${placesToken}`)
-  //   fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.props.testThis}+Houston&key=${placesToken}`)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       this.setState({
-  //           name: json,
-  //           carddata: '',
-  //       })
-  //     });
-  // }
 
-  componentDidMount() {
-    // this.fetchGooglePlaces();
-  }
-
-  componentDidUpdate(prevProps) {
-    if(this.props.carddata !== prevProps.carddata) {
+//move this function to /api
+//add param that takes the fetch URL, prop name,
+//try to make reusable
+  fetchGooglePlaces(prevProps) {
+    if(this.props.carddata !== prevProps.carddata || this.props.locationdata !== prevProps.locationdata)
+    {
       this.setState({
           carddata: this.props.carddata,
+          locationdata: this.props.locationdata,
       })
-      fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.props.carddata}+Houston&key=${placesToken}`)
+      fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.props.carddata}+${this.props.locationdata}&key=${placesToken}`)
         .then(res => res.json())
         .then(json => {
           this.setState({
               name: json.results,
               carddata: this.props.carddata,
+              locationdata: this.props.locationdata,
           })
+        })
+        .catch(function(error) {
+          console.log('There has been a problem with your fetch operation: ', error.message);
         });
     }
   }
 
+  componentDidUpdate(prevProps) {
+    this.fetchGooglePlaces(prevProps);
+  }
+
   render() {
+    //add a button/slider to change the view
+      //this will change the state of this.state.placeView (for example)
+    //wrap this in an if statement and use the state to test
     let { name } = this.state;
-    console.log(name);
     const placeCard = name.map((name) =>
         <Card style={{ width: '30rem' }}>
           <Card.Img variant="top" src="" />
