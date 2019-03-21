@@ -30,9 +30,11 @@ class Card extends React.Component {
         <Selection
         updateCardData={this.updateCardData} updateLocation={this.updateLocation}
         />
-        <Place
-        carddata={this.state.placeQuery} locationdata={this.state.locationQuery}
-        />
+        {this.state.placeQuery, this.state.locationQuery && (
+          <Place
+          carddata={this.state.placeQuery} locationdata={this.state.locationQuery}
+          />
+        )}
       </>
     );
   }
