@@ -11,7 +11,10 @@ class Place extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: [],
+      cardData: [],
+      cardNumber: 0,
+      multiCardView: true, 
+      singleCardView: false,
     }
   }
 
@@ -21,13 +24,13 @@ class Place extends React.Component {
 
 //// TODO: Bug - fetch is happening 3 times ?? Why :< or is the state being set 3 times?? Oh! I'm setting the state twice and then fetching so maybe that's why i see it logging 3 times.... OH! I'm updating each time i get new props. I'm getting data from 2 other comp. from selection.
 
-  fetchGooglePlaces(prevProps) {
-      fetch(`${Places.urlBody}${this.props.carddata}+${this.props.locationdata}&key=${placesToken}`)
+  fetchGooglePlaces = (prevProps) => {
+      fetch(`${Places.urlBody}${this.props.fooddata}+${this.props.locationdata}&key=${placesToken}`)
         .then(res => res.json())
         .then(json => {
           this.setState({
-              name: json.results,
-              carddata: this.props.carddata,
+            cardData: json.results,
+              fooddata: this.props.fooddata,
               locationdata: this.props.locationdata,
           })
         })
@@ -36,7 +39,7 @@ class Place extends React.Component {
         })
   }
 
-  shuffle(array) {
+  shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     // While there remain elements to shuffle...
@@ -54,15 +57,20 @@ class Place extends React.Component {
 
     return array;
   }
-//// TODO: not fetching data, assuming state is not being set?
-componentDidMount() {
+
+  switchCardView = () => {
+    this.state.singleCardView ? this.setState({singleCardView: false}) : this.state.multiCardView ? this.setState({multiCardView: false}) : console.log("hello");
+  }
+
+componentDidMount = () => {
   this.fetchGooglePlaces();
   // console.log("Hey");
-  console.log(this.state.name);
+  console.log(this.state.cardData);
+  // this.switchCardView();
 }
 
-shouldComponentUpdate(nextProps, nextState){
-  if (this.props.carddata !== nextProps.carddata || this.props.locationdata !== nextProps.locationdata) {
+shouldComponentUpdate = (nextProps, nextState) => {
+  if (this.props.fooddata !== nextProps.fooddata || this.props.locationdata !== nextProps.locationdata) {
     console.log('updating');
     return true;
   }else {
@@ -70,22 +78,39 @@ shouldComponentUpdate(nextProps, nextState){
   }
 }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.carddata !== prevProps.carddata || this.props.locationdata !== prevProps.locationdata) {
+  componentDidUpdate = (prevProps) => {
+    if (this.props.fooddata !== prevProps.fooddata || this.props.locationdata !== prevProps.locationdata) {
       this.fetchGooglePlaces(prevProps);
   }
-    // console.log(this.state.name);
+    console.log(this.state.cardData);
+    console.log(this.state.singleCardView);
   }
 
-  render() {
-    //add a button/slider to change the view
-      //this will change the state of this.state.placeView (for example)
-    //wrap this in an if statement and use the state to test
-    let { name } = this.state;
+  next = () => {
+    if (this.state.cardNumber !== this.state.cardData.length) {
+      this.setState({
+        cardNumber: + 1,
+      })
+    }
+    console.log(this.state.cardData[this.state.cardNumber])
+  }
 
-    const shuffledCards = this.shuffle(name);
-    const randomCards = shuffledCards.map((card) =>
-        <Card style={{ width: '30rem' }} key={card.id}>
+  back = () => {
+    if (this.state.cardNumber !== 0) {
+      this.setState({
+        cardNumber: - 1,
+      })
+    }
+    console.log(this.state.cardData[this.state.cardNumber])
+  }
+
+  generateCards() {
+    let { cardData, multiCardView, singleCardView, cardNumber } = this.state;
+    const shuffledCards = this.shuffle(cardData);
+    if (multiCardView) {
+      const multicardView = shuffledCards.map((card) => {
+        return (
+          <Card style={{ width: '30rem' }} key={card.id}>
           <Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title>{card.name}</Card.Title>
@@ -101,11 +126,41 @@ shouldComponentUpdate(nextProps, nextState){
             <Card.Link href="#">ho</Card.Link>
           </Card.Body>
         </Card>
-    )
+        );
+      })
+      return multicardView;
+    } else if (singleCardView) {
+      let {cardNumber, cardData} = this.state;
+      console.log(cardData);
+      return (
+        <div>
+         <Card style={{ width: '30rem' }} >
+          <Card.Img variant="top" src="" />
+          <Card.Body>
+            <Card.Title>{cardData[cardNumber].name}</Card.Title>
+            <Card.Text>
+              Quick blub about restaurant.
+            </Card.Text>
+          </Card.Body>
+          <ListGroup className="list-group-flush">
+            <ListGroupItem>{shuffledCards[cardNumber].rating}</ListGroupItem>
+            <ListGroupItem>9AM-10PM</ListGroupItem>
+          </ListGroup>
+          <Card.Body>
+            <Card.Link href="#">ho</Card.Link>
+          </Card.Body>
+          </Card>
+        </div>
+      )
+    }
+    console.log(shuffledCards[cardNumber]);
+  }
+
+  render() {
     return (
       <>
-        {randomCards}
-        <PlaceNav />
+        {this.generateCards()}
+        <PlaceNav next={this.next} back={this.back}/>
       </>
     );
   }

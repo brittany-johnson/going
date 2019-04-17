@@ -8,7 +8,7 @@ class Selection extends React.Component {
   render(props) {
     return(
       <>
-        <CategorySelection updateCardData={this.props.updateCardData} />
+        <CategorySelection updateFood={this.props.updateFood} />
         <LocationSelection updateLocation={this.props.updateLocation}/>
       </>
     );

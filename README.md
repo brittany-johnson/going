@@ -3,7 +3,7 @@
 Going is a React app that uses the Google Places API to fetch data based on a users given location and meal category preference.  
 
 Version v0.1.0 of Going is currently in development.  
-  - Check out the project's [Trello Board](https://trello.com/b/Rk9xY1Uz/going) for upcoming and in progress work!
+  - Check out the project's [Trello Board](https://trello.com/b/Rk9xY1Uz/going) for upcoming and in progress work and known bugs!
 
 ![make-selection-display-data](https://github.com/brittany-johnson/going/blob/master/progressGifs/3-21-19-going.gif)
 

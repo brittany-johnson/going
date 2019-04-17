@@ -7,14 +7,14 @@ class Card extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      placeQuery: '',
+      foodQuery: '',
       locationQuery: '',
     }
   };
 
-  updateCardData = (selectionChange) => {
+  updateFood = (selectionChange) => {
     this.setState({
-        placeQuery: selectionChange,
+        foodQuery: selectionChange,
     })
   };
 
@@ -28,11 +28,11 @@ class Card extends React.Component {
     return(
       <>
         <Selection
-        updateCardData={this.updateCardData} updateLocation={this.updateLocation}
+        updateFood={this.updateFood} updateLocation={this.updateLocation}
         />
-        {this.state.placeQuery, this.state.locationQuery && (
+        {this.state.foodQuery, this.state.locationQuery && (
           <Place
-          carddata={this.state.placeQuery} locationdata={this.state.locationQuery}
+          fooddata={this.state.foodQuery} locationdata={this.state.locationQuery}
           />
         )}
       </>

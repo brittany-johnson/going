@@ -11,7 +11,7 @@ class CategorySelection extends React.Component {
   };
   onSelect = (event) => {
     this.setState({value: event});
-    this.props.updateCardData(event);
+    this.props.updateFood(event);
   }
 
   render() {
